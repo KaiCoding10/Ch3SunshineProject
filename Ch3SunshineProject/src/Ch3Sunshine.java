@@ -38,6 +38,18 @@ public class Ch3Sunshine {
         return cPrice;
     }
     private static void output(double Hours, double AdMinutes, double Price) {
+         //print today's date
+        LocalDate today = LocalDate.now();
+        System.out.println("Current date: " + today);
+
+        //prompt user to enter a date
+        String strDate;
+        strDate = getDateFromUser();
+        System.out.println("Date as entered: " + strDate);
+
+
+        //now format the entered date
+        formatDate(strDate);
 
         System.out.println(CompanyMotto.getMotto());
         System.out.format("%-12s%-12s%-12s\n" , "Hours" , "Minutes" , "Price" );
@@ -46,6 +58,28 @@ public class Ch3Sunshine {
         //System.out.print(dollarAmt.format(Price) + "\n");
         System.out.format("%-12.0f%-12.0f$%-12.2f" , Hours , AdMinutes , Price);
 
+    }
+    private static String getDateFromUser() {
+        String enteredDate;
+            System.out.print("Enter a date (MM/DD/YYYY format): ");
+            enteredDate = inputDevice.nextLine();
+           
+            return enteredDate;
+
+    }
+    private static void formatDate(String enteredDate) {
+        String enteredPattern = "MM/dd/yyyy";
+        String newPattern = "MMMM dd, yyyy";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(enteredPattern);
+        try {
+            Date d = sdf.parse(enteredDate);
+            sdf.applyPattern(newPattern);
+            String newDateString = sdf.format(d);
+            System.out.println("Entered date formatted: " + newDateString);
+        } catch (ParseException pe) {
+            System.out.println("Invalid date entered. Default to current date.");
+        }
     }
     private static void init() {
         inputDevice = new Scanner(System.in);
